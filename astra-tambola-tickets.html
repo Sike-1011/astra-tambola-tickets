@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Astra Tambola Match - 50 Tickets</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #fff;
+    color: #000;
+  }
+  h1.main-heading {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #c2185b;
+    letter-spacing: 1px;
+  }
+  .tickets-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .ticket {
+    border: 2px solid #e91e63;
+    border-radius: 6px;
+    padding: 10px 12px;
+    background: #fff;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    margin-bottom: 6px;
+    color: #555;
+  }
+  .ticket-header .brand {
+    font-weight: bold;
+    color: #c2185b;
+  }
+  table.ticket-grid {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  table.ticket-grid td {
+    border: 1.5px solid #29b6f6;
+    height: 32px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    width: 11.11%;
+    padding: 2px;
+  }
+  table.ticket-grid td.empty {
+    background: #fff;
+  }
+  .ticket-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    margin-top: 6px;
+    color: #555;
+  }
+  .instructions {
+    text-align: center;
+    font-size: 15px;
+    background: #fff3e0;
+    border: 1px dashed #ff9800;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 0 auto 16px;
+    max-width: 700px;
+    color: #5d4037;
+    line-height: 1.5;
+  }
+  .instructions strong { color: #d84315; }
+
+  .controls {
+    text-align: center;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .controls label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+  }
+  .controls select {
+    padding: 7px 10px;
+    font-size: 14px;
+    border: 2px solid #c2185b;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+  }
+  .controls button {
+    background: #c2185b;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .controls button:hover { background: #ad1457; }
+
+  .credit {
+    text-align: center;
+    margin: 24px auto 8px;
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #ff1744, #ff9100, #ffea00, #00e676, #00b0ff, #d500f9, #ff1744);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite, pulse 1.2s ease-in-out infinite alternate;
+    text-shadow: 0 0 1px rgba(0,0,0,0.05);
+  }
+  @keyframes shine {
+    0%   { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+  @keyframes pulse {
+    from { transform: scale(1); }
+    to   { transform: scale(1.04); }
+  }
+
+  @media print {
+    body { margin: 0; }
+    .controls, .instructions, .credit { display: none; }
+    .tickets-container { gap: 10px; }
+    .ticket { border-color: #e91e63; }
+    h1.main-heading { margin-bottom: 12px; }
+  }
+</style>
+</head>
+<body>
+  <h1 class="main-heading">Astra Tambola Match</h1>
+  <div class="credit">✨ Developed by Arsh in Astra ✨</div>
+  <div class="instructions">
+    <strong>How to use:</strong> 1) Choose the number of tickets you want and click <strong>Generate</strong>.
+    2) Once tickets appear below, click <strong>Print Tickets</strong> to print them.
+  </div>
+  <div class="controls">
+    <label for="ticketCount">Number of tickets:</label>
+    <select id="ticketCount">
+      <option value="10">10</option>
+      <option value="15">15</option>
+      <option value="20">20</option>
+      <option value="25">25</option>
+      <option value="30">30</option>
+      <option value="35">35</option>
+      <option value="40">40</option>
+      <option value="45">45</option>
+      <option value="50" selected>50</option>
+    </select>
+    <button onclick="regenerate()">Generate</button>
+    <button onclick="window.print()">Print Tickets</button>
+  </div>
+  <div id="tickets" class="tickets-container"></div>
+
+<script>
+// Standard Tambola/Housie ticket generator
+// 3 rows x 9 columns. 15 numbers per ticket (5 per row).
+// Column ranges: col 0 -> 1-9, col 1 -> 10-19, ..., col 7 -> 70-79, col 8 -> 80-90.
+// Each column has 1 to 3 numbers (numbers ascending top-to-bottom).
+
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function columnRange(c) {
+  if (c === 0) return [1, 9];
+  if (c === 8) return [80, 90];
+  return [c * 10, c * 10 + 9];
+}
+
+function generateTicket() {
+  // Step 1: distribute 15 numbers across 9 columns (each col 1..3, sum 15)
+  while (true) {
+    const colCounts = new Array(9).fill(1); // start with 1 each = 9
+    let remaining = 6;
+    while (remaining > 0) {
+      const c = randInt(0, 8);
+      if (colCounts[c] < 3) {
+        colCounts[c]++;
+        remaining--;
+      }
+    }
+
+    // Step 2: pick numbers for each column
+    const colNumbers = [];
+    for (let c = 0; c < 9; c++) {
+      const [lo, hi] = columnRange(c);
+      const pool = [];
+      for (let n = lo; n <= hi; n++) pool.push(n);
+      shuffle(pool);
+      const picked = pool.slice(0, colCounts[c]).sort((a, b) => a - b);
+      colNumbers.push(picked);
+    }
+
+    // Step 3: place numbers into 3x9 grid with exactly 5 per row
+    const grid = placeNumbers(colCounts, colNumbers);
+    if (grid) return grid;
+    // else retry
+  }
+}
+
+function placeNumbers(colCounts, colNumbers) {
+  // We need an assignment: for each column with k numbers, choose k of 3 rows.
+  // Constraint: each row gets exactly 5 picks total.
+  // Try randomized assignment with backtracking.
+  const rowCounts = [0, 0, 0];
+  const colRows = new Array(9); // for each col: sorted list of row indices selected
+
+  function backtrack(col) {
+    if (col === 9) {
+      return rowCounts[0] === 5 && rowCounts[1] === 5 && rowCounts[2] === 5;
+    }
+    const k = colCounts[col];
+    const combos = combosOf3Choose(k);
+    shuffle(combos);
+    for (const combo of combos) {
+      // check feasibility
+      let ok = true;
+      for (const r of combo) {
+        if (rowCounts[r] + 1 > 5) { ok = false; break; }
+      }
+      if (!ok) continue;
+      // check remaining capacity is sufficient
+      const remainingCols = 9 - col - 1;
+      let remainingPicks = 0;
+      for (let c = col + 1; c < 9; c++) remainingPicks += colCounts[c];
+      // After placing, check each row still reachable
+      const newCounts = rowCounts.slice();
+      for (const r of combo) newCounts[r]++;
+      const needed = newCounts.map(n => 5 - n);
+      if (needed.some(n => n < 0)) continue;
+      if (needed.reduce((a, b) => a + b, 0) !== remainingPicks) continue;
+      // Each row's remaining needs must be <= remainingCols (since each col contributes at most once to a row)
+      if (needed.some(n => n > remainingCols)) continue;
+
+      for (const r of combo) rowCounts[r]++;
+      colRows[col] = combo.slice().sort();
+      if (backtrack(col + 1)) return true;
+      for (const r of combo) rowCounts[r]--;
+    }
+    return false;
+  }
+
+  if (!backtrack(0)) return null;
+
+  // Build grid
+  const grid = [
+    new Array(9).fill(null),
+    new Array(9).fill(null),
+    new Array(9).fill(null),
+  ];
+  for (let c = 0; c < 9; c++) {
+    const rows = colRows[c]; // sorted ascending
+    const nums = colNumbers[c]; // sorted ascending
+    for (let i = 0; i < rows.length; i++) {
+      grid[rows[i]][c] = nums[i];
+    }
+  }
+  return grid;
+}
+
+function combosOf3Choose(k) {
+  if (k === 1) return [[0],[1],[2]];
+  if (k === 2) return [[0,1],[0,2],[1,2]];
+  if (k === 3) return [[0,1,2]];
+  return [];
+}
+
+function ticketKey(grid) {
+  return grid.map(r => r.map(v => v === null ? '.' : v).join(',')).join('|');
+}
+
+function randomCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+  const digits = '0123456789';
+  let s = '';
+  for (let i = 0; i < 3; i++) s += chars[randInt(0, chars.length - 1)];
+  s += digits[randInt(0, 9)];
+  return s;
+}
+
+function renderTicket(grid, idx, code) {
+  const rowsHtml = grid.map(row =>
+    '<tr>' + row.map(v =>
+      v === null ? '<td class="empty"></td>' : `<td>${v}</td>`
+    ).join('') + '</tr>'
+  ).join('');
+
+  return `
+    <div class="ticket">
+      <div class="ticket-header">
+        <span>Astra Tambola</span>
+        <span class="brand">astraglobal.com</span>
+      </div>
+      <table class="ticket-grid">${rowsHtml}</table>
+      <div class="ticket-footer">
+        <span>#${idx}</span>
+        <span>code: ${code}</span>
+      </div>
+    </div>
+  `;
+}
+
+function regenerate() {
+  const container = document.getElementById('tickets');
+  container.innerHTML = '';
+  const seen = new Set();
+  let html = '';
+  let count = 0;
+  let attempts = 0;
+  const target = parseInt(document.getElementById('ticketCount').value, 10) || 50;
+  while (count < target && attempts < 5000) {
+    attempts++;
+    const grid = generateTicket();
+    const key = ticketKey(grid);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    count++;
+    html += renderTicket(grid, count, randomCode());
+  }
+  container.innerHTML = html;
+}
+
+regenerate();
+</script>
+</body>
+</html>
