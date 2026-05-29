@@ -2,353 +2,559 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Astra Tambola Match - 50 Tickets</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astra Tambola</title>
 <style>
+  :root {
+    --pink: #ff2d75;
+    --pink-deep: #c2185b;
+    --blue: #29b6f6;
+    --blue-deep: #0091ea;
+    --amber: #ff9100;
+    --bg-0: #0f0a1e;
+    --bg-1: #1a1030;
+    --glass: rgba(255,255,255,0.06);
+    --glass-brd: rgba(255,255,255,0.12);
+    --txt: #f3eefb;
+    --txt-dim: #b3a9c9;
+  }
   * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
   body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background: #fff;
-    color: #000;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+    color: var(--txt);
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(255,45,117,0.25), transparent 60%),
+      radial-gradient(1000px 500px at 95% 10%, rgba(41,182,246,0.22), transparent 55%),
+      radial-gradient(900px 700px at 50% 120%, rgba(213,0,249,0.18), transparent 60%),
+      linear-gradient(160deg, var(--bg-0), var(--bg-1));
+    background-attachment: fixed;
   }
-  h1.main-heading {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 20px;
-    color: #c2185b;
-    letter-spacing: 1px;
-  }
-  .tickets-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-  }
-  .ticket {
-    border: 2px solid #e91e63;
-    border-radius: 6px;
-    padding: 10px 12px;
-    background: #fff;
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-  .ticket-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    margin-bottom: 6px;
-    color: #555;
-  }
-  .ticket-header .brand {
-    font-weight: bold;
-    color: #c2185b;
-  }
-  table.ticket-grid {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-  }
-  table.ticket-grid td {
-    border: 1.5px solid #29b6f6;
-    height: 32px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    width: 11.11%;
-    padding: 2px;
-  }
-  table.ticket-grid td.empty {
-    background: #fff;
-  }
-  .ticket-footer {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    margin-top: 6px;
-    color: #555;
-  }
-  .instructions {
-    text-align: center;
-    font-size: 15px;
-    background: #fff3e0;
-    border: 1px dashed #ff9800;
-    padding: 10px 14px;
-    border-radius: 6px;
-    margin: 0 auto 16px;
-    max-width: 700px;
-    color: #5d4037;
-    line-height: 1.5;
-  }
-  .instructions strong { color: #d84315; }
 
-  .controls {
+  /* ---------- Header ---------- */
+  header {
     text-align: center;
-    margin-bottom: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    padding: 26px 16px 8px;
   }
-  .controls label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-  }
-  .controls select {
-    padding: 7px 10px;
-    font-size: 14px;
-    border: 2px solid #c2185b;
-    border-radius: 4px;
-    background: #fff;
-    cursor: pointer;
-  }
-  .controls button {
-    background: #c2185b;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .controls button:hover { background: #ad1457; }
-
-  .credit {
-    text-align: center;
-    margin: 24px auto 8px;
-    font-size: 26px;
+  .logo {
+    font-size: clamp(30px, 6vw, 52px);
     font-weight: 900;
-    letter-spacing: 2px;
-    background: linear-gradient(90deg, #ff1744, #ff9100, #ffea00, #00e676, #00b0ff, #d500f9, #ff1744);
-    background-size: 200% auto;
+    letter-spacing: 3px;
+    margin: 0;
+    background: linear-gradient(90deg, #ff2d75, #ff9100, #ffea00, #00e676, #29b6f6, #d500f9, #ff2d75);
+    background-size: 220% auto;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shine 3s linear infinite, pulse 1.2s ease-in-out infinite alternate;
-    text-shadow: 0 0 1px rgba(0,0,0,0.05);
+    animation: shine 5s linear infinite;
+    text-shadow: 0 0 30px rgba(255,45,117,0.25);
   }
-  @keyframes shine {
-    0%   { background-position: 0% center; }
-    100% { background-position: 200% center; }
+  .tagline {
+    margin: 4px 0 0;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--txt-dim);
   }
-  @keyframes pulse {
-    from { transform: scale(1); }
-    to   { transform: scale(1.04); }
+  .credit {
+    margin: 10px auto 0;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    background: linear-gradient(90deg, #ff2d75, #ffea00, #00e676, #29b6f6, #d500f9, #ff2d75);
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 4s linear infinite;
+  }
+  @keyframes shine { to { background-position: 220% center; } }
+
+  /* ---------- Tabs ---------- */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    width: max-content;
+    max-width: 94%;
+    margin: 22px auto 26px;
+    padding: 6px;
+    background: var(--glass);
+    border: 1px solid var(--glass-brd);
+    border-radius: 999px;
+    backdrop-filter: blur(12px);
+  }
+  .tab {
+    border: none;
+    background: transparent;
+    color: var(--txt-dim);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 11px 26px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.05s ease;
+  }
+  .tab:active { transform: scale(0.97); }
+  .tab.active {
+    color: #fff;
+    background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+    box-shadow: 0 6px 18px rgba(255,45,117,0.4);
   }
 
+  .view { display: none; max-width: 1180px; margin: 0 auto; padding: 0 16px 60px; }
+  .view.active { display: block; animation: fade 0.35s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .glass {
+    background: var(--glass);
+    border: 1px solid var(--glass-brd);
+    border-radius: 20px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  }
+
+  /* ---------- Caller ---------- */
+  .stage {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  .caller-panel { padding: 26px 22px; text-align: center; }
+
+  .current-number {
+    width: 230px;
+    height: 230px;
+    margin: 4px auto 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #ff7aa8, var(--pink) 45%, var(--pink-deep) 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 96px;
+    font-weight: 900;
+    box-shadow: 0 0 0 8px rgba(255,255,255,0.06), 0 18px 50px rgba(255,45,117,0.5);
+    position: relative;
+  }
+  .current-number::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--pink), var(--blue), var(--amber), var(--pink));
+    z-index: -1;
+    filter: blur(14px);
+    opacity: 0.6;
+    animation: spin 6s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .current-number.pop { animation: pop 0.45s cubic-bezier(.2,1.4,.4,1); }
+  @keyframes pop { 0% { transform: scale(0.5); } 60% { transform: scale(1.14); } 100% { transform: scale(1); } }
+
+  .current-caption {
+    font-size: 15px;
+    color: var(--txt-dim);
+    min-height: 22px;
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+
+  .recent-title, .stats-lbl {
+    font-size: 11px; color: var(--txt-dim);
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;
+  }
+  .recent-balls {
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+    min-height: 42px; margin-bottom: 18px;
+  }
+  .recent-balls .ball {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; box-shadow: 0 4px 12px rgba(41,182,246,0.4);
+  }
+  .recent-balls .ball.faded { opacity: 0.4; transform: scale(0.82); }
+
+  .stats {
+    display: flex; gap: 14px; justify-content: center; margin-bottom: 20px;
+  }
+  .stat-box {
+    flex: 1; max-width: 130px; padding: 10px 6px;
+    border-radius: 14px; background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-brd);
+  }
+  .stat-box b { display: block; font-size: 26px; color: #fff; }
+  .stat-box span { font-size: 11px; color: var(--txt-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+  .controls { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .controls .row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  button.btn {
+    border: none; border-radius: 12px; cursor: pointer;
+    font-size: 15px; font-weight: 800; letter-spacing: 0.5px;
+    padding: 13px 24px; color: #fff;
+    transition: transform 0.06s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  }
+  button.btn:active { transform: scale(0.96); }
+  button.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .btn-next {
+    background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+    font-size: 19px; padding: 17px 40px; width: 100%;
+    box-shadow: 0 10px 26px rgba(255,45,117,0.45);
+  }
+  .btn-next:hover:not(:disabled) { filter: brightness(1.08); }
+  .btn-auto { background: linear-gradient(135deg, var(--blue), var(--blue-deep)); box-shadow: 0 8px 20px rgba(41,182,246,0.4); }
+  .btn-auto.on { background: linear-gradient(135deg, #00e676, #00897b); box-shadow: 0 8px 20px rgba(0,150,90,0.4); }
+  .btn-reset { background: rgba(255,255,255,0.12); }
+  .btn-reset:hover { background: rgba(255,255,255,0.2); }
+
+  .opt { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--txt-dim); }
+  .opt input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--pink); }
+  .opt select {
+    padding: 7px 10px; border: 1px solid var(--glass-brd); border-radius: 8px;
+    background: #2a1c44; color: var(--txt); cursor: pointer; font-size: 13px;
+  }
+
+  /* ---------- Board ---------- */
+  .board-panel { padding: 22px; }
+  table.board { border-collapse: separate; border-spacing: 6px; width: 100%; }
+  table.board td {
+    width: 10%; height: 50px;
+    text-align: center; font-size: 19px; font-weight: 800;
+    color: var(--txt-dim);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--glass-brd);
+    border-radius: 11px;
+    position: relative;
+    transition: all 0.25s ease;
+  }
+  table.board td.called {
+    background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+    color: #fff; border-color: transparent;
+    box-shadow: 0 4px 12px rgba(255,45,117,0.35);
+  }
+  table.board td.called::after {
+    content: ""; position: absolute; left: 12%; top: 50%;
+    width: 76%; height: 3px; background: rgba(255,255,255,0.9);
+    transform: rotate(-16deg); border-radius: 2px;
+  }
+  table.board td.last {
+    background: linear-gradient(135deg, #ffb74d, var(--amber));
+    color: #fff; transform: scale(1.12);
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.5), 0 8px 22px rgba(255,145,0,0.55);
+    z-index: 2;
+  }
+  table.board td.last::after { background: rgba(255,255,255,0.95); }
+
+  /* ---------- Tickets ---------- */
+  .ticket-controls {
+    display: flex; gap: 12px; justify-content: center; align-items: center;
+    flex-wrap: wrap; padding: 20px; margin-bottom: 22px;
+  }
+  .ticket-controls label { font-size: 14px; font-weight: 700; color: var(--txt-dim); }
+  .ticket-controls select {
+    padding: 9px 12px; font-size: 14px; border: 1px solid var(--glass-brd);
+    border-radius: 8px; background: #2a1c44; color: var(--txt); cursor: pointer;
+  }
+  .tickets-container {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  }
+  .ticket {
+    border-radius: 14px; padding: 12px 14px;
+    background: #fff; color: #111;
+    page-break-inside: avoid; break-inside: avoid;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+  .ticket-header {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; margin-bottom: 8px; color: #777;
+  }
+  .ticket-header .brand { font-weight: bold; color: var(--pink-deep); }
+  table.ticket-grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  table.ticket-grid td {
+    border: 1.5px solid var(--blue); height: 36px; text-align: center;
+    font-size: 17px; font-weight: bold; width: 11.11%; padding: 2px; color: #111;
+  }
+  table.ticket-grid td.empty { background: #f3f6f9; }
+  .ticket-footer {
+    display: flex; justify-content: space-between; font-size: 11px;
+    margin-top: 8px; color: #888;
+  }
+
+  @media (max-width: 820px) {
+    .stage { grid-template-columns: 1fr; }
+    .current-number { width: 180px; height: 180px; font-size: 70px; }
+    table.board td { height: 42px; font-size: 16px; }
+    .tickets-container { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Print: only tickets ---------- */
   @media print {
-    body { margin: 0; }
-    .controls, .instructions, .credit { display: none; }
-    .tickets-container { gap: 10px; }
-    .ticket { border-color: #e91e63; }
-    h1.main-heading { margin-bottom: 12px; }
+    body { background: #fff !important; color: #000; }
+    header, .tabs, #view-caller, .ticket-controls, .no-print { display: none !important; }
+    .view { display: block !important; max-width: none; padding: 0; }
+    .tickets-container { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .ticket { box-shadow: none; border: 2px solid var(--pink-deep); }
   }
 </style>
 </head>
 <body>
-  <h1 class="main-heading">Astra Tambola Match</h1>
-  <div class="credit">✨ Developed by Arsh in Astra ✨</div>
-  <div class="instructions">
-    <strong>How to use:</strong> 1) Choose the number of tickets you want and click <strong>Generate</strong>.
-    2) Once tickets appear below, click <strong>Print Tickets</strong> to print them.
+  <header>
+    <h1 class="logo">ASTRA TAMBOLA</h1>
+    <p class="tagline">Play &middot; Generate &middot; Win</p>
+    <div class="credit">✨ Developed by Arsh in Astra ✨</div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" id="tab-caller" onclick="switchTab('caller')">🎙️ Number Caller</button>
+    <button class="tab" id="tab-tickets" onclick="switchTab('tickets')">🎫 Generate Tickets</button>
   </div>
-  <div class="controls">
-    <label for="ticketCount">Number of tickets:</label>
-    <select id="ticketCount">
-      <option value="10">10</option>
-      <option value="15">15</option>
-      <option value="20">20</option>
-      <option value="25">25</option>
-      <option value="30">30</option>
-      <option value="35">35</option>
-      <option value="40">40</option>
-      <option value="45">45</option>
-      <option value="50" selected>50</option>
-    </select>
-    <button onclick="regenerate()">Generate</button>
-    <button onclick="window.print()">Print Tickets</button>
-  </div>
-  <div id="tickets" class="tickets-container"></div>
 
-<script>
-// Standard Tambola/Housie ticket generator
-// 3 rows x 9 columns. 15 numbers per ticket (5 per row).
-// Column ranges: col 0 -> 1-9, col 1 -> 10-19, ..., col 7 -> 70-79, col 8 -> 80-90.
-// Each column has 1 to 3 numbers (numbers ascending top-to-bottom).
+  <!-- ============ CALLER ============ -->
+  <div class="view active" id="view-caller">
+    <div class="stage">
+      <div class="caller-panel glass">
+        <div id="currentNumber" class="current-number">—</div>
+        <div id="currentCaption" class="current-caption">Press “Next Number” to begin</div>
 
-function randInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+        <div class="recent-title">Last 5 called</div>
+        <div id="recentBalls" class="recent-balls"></div>
 
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
+        <div class="stats">
+          <div class="stat-box"><b id="calledCount">0</b><span>Called</span></div>
+          <div class="stat-box"><b id="remainingCount">90</b><span>Left</span></div>
+        </div>
 
-function columnRange(c) {
-  if (c === 0) return [1, 9];
-  if (c === 8) return [80, 90];
-  return [c * 10, c * 10 + 9];
-}
-
-function generateTicket() {
-  // Step 1: distribute 15 numbers across 9 columns (each col 1..3, sum 15)
-  while (true) {
-    const colCounts = new Array(9).fill(1); // start with 1 each = 9
-    let remaining = 6;
-    while (remaining > 0) {
-      const c = randInt(0, 8);
-      if (colCounts[c] < 3) {
-        colCounts[c]++;
-        remaining--;
-      }
-    }
-
-    // Step 2: pick numbers for each column
-    const colNumbers = [];
-    for (let c = 0; c < 9; c++) {
-      const [lo, hi] = columnRange(c);
-      const pool = [];
-      for (let n = lo; n <= hi; n++) pool.push(n);
-      shuffle(pool);
-      const picked = pool.slice(0, colCounts[c]).sort((a, b) => a - b);
-      colNumbers.push(picked);
-    }
-
-    // Step 3: place numbers into 3x9 grid with exactly 5 per row
-    const grid = placeNumbers(colCounts, colNumbers);
-    if (grid) return grid;
-    // else retry
-  }
-}
-
-function placeNumbers(colCounts, colNumbers) {
-  // We need an assignment: for each column with k numbers, choose k of 3 rows.
-  // Constraint: each row gets exactly 5 picks total.
-  // Try randomized assignment with backtracking.
-  const rowCounts = [0, 0, 0];
-  const colRows = new Array(9); // for each col: sorted list of row indices selected
-
-  function backtrack(col) {
-    if (col === 9) {
-      return rowCounts[0] === 5 && rowCounts[1] === 5 && rowCounts[2] === 5;
-    }
-    const k = colCounts[col];
-    const combos = combosOf3Choose(k);
-    shuffle(combos);
-    for (const combo of combos) {
-      // check feasibility
-      let ok = true;
-      for (const r of combo) {
-        if (rowCounts[r] + 1 > 5) { ok = false; break; }
-      }
-      if (!ok) continue;
-      // check remaining capacity is sufficient
-      const remainingCols = 9 - col - 1;
-      let remainingPicks = 0;
-      for (let c = col + 1; c < 9; c++) remainingPicks += colCounts[c];
-      // After placing, check each row still reachable
-      const newCounts = rowCounts.slice();
-      for (const r of combo) newCounts[r]++;
-      const needed = newCounts.map(n => 5 - n);
-      if (needed.some(n => n < 0)) continue;
-      if (needed.reduce((a, b) => a + b, 0) !== remainingPicks) continue;
-      // Each row's remaining needs must be <= remainingCols (since each col contributes at most once to a row)
-      if (needed.some(n => n > remainingCols)) continue;
-
-      for (const r of combo) rowCounts[r]++;
-      colRows[col] = combo.slice().sort();
-      if (backtrack(col + 1)) return true;
-      for (const r of combo) rowCounts[r]--;
-    }
-    return false;
-  }
-
-  if (!backtrack(0)) return null;
-
-  // Build grid
-  const grid = [
-    new Array(9).fill(null),
-    new Array(9).fill(null),
-    new Array(9).fill(null),
-  ];
-  for (let c = 0; c < 9; c++) {
-    const rows = colRows[c]; // sorted ascending
-    const nums = colNumbers[c]; // sorted ascending
-    for (let i = 0; i < rows.length; i++) {
-      grid[rows[i]][c] = nums[i];
-    }
-  }
-  return grid;
-}
-
-function combosOf3Choose(k) {
-  if (k === 1) return [[0],[1],[2]];
-  if (k === 2) return [[0,1],[0,2],[1,2]];
-  if (k === 3) return [[0,1,2]];
-  return [];
-}
-
-function ticketKey(grid) {
-  return grid.map(r => r.map(v => v === null ? '.' : v).join(',')).join('|');
-}
-
-function randomCode() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
-  const digits = '0123456789';
-  let s = '';
-  for (let i = 0; i < 3; i++) s += chars[randInt(0, chars.length - 1)];
-  s += digits[randInt(0, 9)];
-  return s;
-}
-
-function renderTicket(grid, idx, code) {
-  const rowsHtml = grid.map(row =>
-    '<tr>' + row.map(v =>
-      v === null ? '<td class="empty"></td>' : `<td>${v}</td>`
-    ).join('') + '</tr>'
-  ).join('');
-
-  return `
-    <div class="ticket">
-      <div class="ticket-header">
-        <span>Astra Tambola</span>
-        <span class="brand">astraglobal.com</span>
+        <div class="controls">
+          <button id="nextBtn" class="btn btn-next" onclick="callNext()">Next Number</button>
+          <div class="row">
+            <button id="autoBtn" class="btn btn-auto" onclick="toggleAuto()">▶ Auto Play</button>
+            <button class="btn btn-reset" onclick="resetGame()">↺ Reset</button>
+          </div>
+          <div class="row">
+            <label class="opt"><input type="checkbox" id="voiceToggle" checked> 🔊 Voice</label>
+            <label class="opt">⚡ Speed:
+              <select id="speedSelect">
+                <option value="3000">Fast (3s)</option>
+                <option value="5000" selected>Normal (5s)</option>
+                <option value="8000">Slow (8s)</option>
+              </select>
+            </label>
+          </div>
+        </div>
       </div>
-      <table class="ticket-grid">${rowsHtml}</table>
-      <div class="ticket-footer">
-        <span>#${idx}</span>
-        <span>code: ${code}</span>
+
+      <div class="board-panel glass">
+        <table class="board" id="board"></table>
       </div>
     </div>
-  `;
-}
+  </div>
 
-function regenerate() {
-  const container = document.getElementById('tickets');
-  container.innerHTML = '';
-  const seen = new Set();
-  let html = '';
-  let count = 0;
-  let attempts = 0;
-  const target = parseInt(document.getElementById('ticketCount').value, 10) || 50;
-  while (count < target && attempts < 5000) {
-    attempts++;
-    const grid = generateTicket();
-    const key = ticketKey(grid);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    count++;
-    html += renderTicket(grid, count, randomCode());
+  <!-- ============ TICKETS ============ -->
+  <div class="view" id="view-tickets">
+    <div class="ticket-controls glass">
+      <label for="ticketCount">Number of tickets:</label>
+      <select id="ticketCount">
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+        <option value="30">30</option>
+        <option value="35">35</option>
+        <option value="40">40</option>
+        <option value="45">45</option>
+        <option value="50" selected>50</option>
+      </select>
+      <button class="btn btn-auto" onclick="regenerate()">✨ Generate</button>
+      <button class="btn btn-next" style="width:auto;padding:13px 24px;font-size:15px" onclick="window.print()">🖨️ Print Tickets</button>
+    </div>
+    <div id="tickets" class="tickets-container"></div>
+  </div>
+
+<script>
+/* =================== NUMBER CALLER =================== */
+  const MAX = 90;
+  let pool = [], called = [], autoTimer = null;
+
+  const nicknames = {
+    1:"Kelly's Eye",2:"One Little Duck",5:"Man Alive",7:"Lucky Seven",8:"Garden Gate",
+    9:"Doctor's Orders",11:"Legs Eleven",13:"Unlucky for Some",21:"Key of the Door",
+    22:"Two Little Ducks",25:"Duck and Dive",30:"Dirty Gertie",33:"All the Threes",
+    44:"Droopy Drawers",50:"Half a Century",55:"Snakes Alive",66:"Clickety Click",
+    76:"Trombones",77:"Sunset Strip",80:"Gandhi's Breakfast",88:"Two Fat Ladies",
+    89:"Nearly There",90:"Top of the Shop"
+  };
+
+  function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+  function buildBoard(){
+    let html='';
+    for(let r=0;r<9;r++){html+='<tr>';for(let c=0;c<10;c++){const n=r*10+c+1;html+=`<td id="cell-${n}">${n}</td>`;}html+='</tr>';}
+    document.getElementById('board').innerHTML=html;
   }
-  container.innerHTML = html;
-}
 
-regenerate();
+  function speak(n){
+    if(!document.getElementById('voiceToggle').checked||!('speechSynthesis'in window))return;
+    window.speechSynthesis.cancel();
+    const text = n<10 ? `Number ${n}. ${n}.` : `${String(n).split('').join(' ')}. ${n}.`;
+    const u=new SpeechSynthesisUtterance(text);u.rate=0.9;u.pitch=1;
+    window.speechSynthesis.speak(u);
+  }
+
+  function updateStats(){
+    document.getElementById('calledCount').textContent=called.length;
+    document.getElementById('remainingCount').textContent=pool.length;
+  }
+  function updateRecent(){
+    document.getElementById('recentBalls').innerHTML=
+      called.slice(-5).reverse().map((n,i)=>`<div class="ball${i===0?'':' faded'}">${n}</div>`).join('');
+  }
+
+  function callNext(){
+    if(pool.length===0){
+      stopAuto();
+      document.getElementById('currentCaption').textContent='All 90 numbers called! 🎉';
+      document.getElementById('nextBtn').disabled=true;
+      return;
+    }
+    const n=pool.pop();called.push(n);
+    document.querySelectorAll('#board td.last').forEach(td=>{td.classList.remove('last');td.classList.add('called');});
+    document.getElementById('cell-'+n).classList.add('last');
+
+    const el=document.getElementById('currentNumber');
+    el.textContent=n;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');
+    document.getElementById('currentCaption').textContent=nicknames[n]||'';
+
+    updateStats();updateRecent();speak(n);
+
+    if(pool.length===0){
+      stopAuto();document.getElementById('nextBtn').disabled=true;
+      setTimeout(()=>{document.getElementById('currentCaption').textContent=(nicknames[n]?nicknames[n]+' — ':'')+'Last number! 🎉';},50);
+    }
+  }
+
+  function toggleAuto(){ autoTimer?stopAuto():startAuto(); }
+  function startAuto(){
+    if(pool.length===0)return;
+    const b=document.getElementById('autoBtn');b.classList.add('on');b.textContent='⏸ Pause';
+    const speed=parseInt(document.getElementById('speedSelect').value,10);
+    callNext();
+    autoTimer=setInterval(()=>{if(pool.length===0){stopAuto();return;}callNext();},speed);
+  }
+  function stopAuto(){
+    if(autoTimer){clearInterval(autoTimer);autoTimer=null;}
+    const b=document.getElementById('autoBtn');b.classList.remove('on');b.textContent='▶ Auto Play';
+  }
+
+  function resetGame(){
+    stopAuto();
+    if('speechSynthesis'in window)window.speechSynthesis.cancel();
+    pool=shuffle(Array.from({length:MAX},(_,i)=>i+1));called=[];
+    buildBoard();
+    document.getElementById('currentNumber').textContent='—';
+    document.getElementById('currentCaption').textContent='Press “Next Number” to begin';
+    document.getElementById('recentBalls').innerHTML='';
+    document.getElementById('nextBtn').disabled=false;
+    updateStats();
+  }
+
+  document.getElementById('speedSelect').addEventListener('change',()=>{if(autoTimer){stopAuto();startAuto();}});
+  document.addEventListener('keydown',e=>{
+    if(e.code==='Space'&&document.getElementById('view-caller').classList.contains('active')){
+      e.preventDefault();
+      if(!document.getElementById('nextBtn').disabled)callNext();
+    }
+  });
+
+/* =================== TICKET GENERATOR =================== */
+  function randInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+  function columnRange(c){if(c===0)return[1,9];if(c===8)return[80,90];return[c*10,c*10+9];}
+
+  function generateTicket(){
+    while(true){
+      const colCounts=new Array(9).fill(1);let remaining=6;
+      while(remaining>0){const c=randInt(0,8);if(colCounts[c]<3){colCounts[c]++;remaining--;}}
+      const colNumbers=[];
+      for(let c=0;c<9;c++){
+        const[lo,hi]=columnRange(c);const pool=[];
+        for(let n=lo;n<=hi;n++)pool.push(n);shuffle(pool);
+        colNumbers.push(pool.slice(0,colCounts[c]).sort((a,b)=>a-b));
+      }
+      const grid=placeNumbers(colCounts,colNumbers);
+      if(grid)return grid;
+    }
+  }
+
+  function placeNumbers(colCounts,colNumbers){
+    const rowCounts=[0,0,0];const colRows=new Array(9);
+    function backtrack(col){
+      if(col===9)return rowCounts[0]===5&&rowCounts[1]===5&&rowCounts[2]===5;
+      const combos=combosOf3Choose(colCounts[col]);shuffle(combos);
+      for(const combo of combos){
+        let ok=true;for(const r of combo){if(rowCounts[r]+1>5){ok=false;break;}}
+        if(!ok)continue;
+        const remainingCols=9-col-1;let remainingPicks=0;
+        for(let c=col+1;c<9;c++)remainingPicks+=colCounts[c];
+        const newCounts=rowCounts.slice();for(const r of combo)newCounts[r]++;
+        const needed=newCounts.map(n=>5-n);
+        if(needed.some(n=>n<0))continue;
+        if(needed.reduce((a,b)=>a+b,0)!==remainingPicks)continue;
+        if(needed.some(n=>n>remainingCols))continue;
+        for(const r of combo)rowCounts[r]++;
+        colRows[col]=combo.slice().sort();
+        if(backtrack(col+1))return true;
+        for(const r of combo)rowCounts[r]--;
+      }
+      return false;
+    }
+    if(!backtrack(0))return null;
+    const grid=[new Array(9).fill(null),new Array(9).fill(null),new Array(9).fill(null)];
+    for(let c=0;c<9;c++){const rows=colRows[c];const nums=colNumbers[c];
+      for(let i=0;i<rows.length;i++)grid[rows[i]][c]=nums[i];}
+    return grid;
+  }
+
+  function combosOf3Choose(k){if(k===1)return[[0],[1],[2]];if(k===2)return[[0,1],[0,2],[1,2]];if(k===3)return[[0,1,2]];return[];}
+  function ticketKey(g){return g.map(r=>r.map(v=>v===null?'.':v).join(',')).join('|');}
+  function randomCode(){
+    const ch='ABCDEFGHJKLMNPQRSTUVWXYZ',dg='0123456789';let s='';
+    for(let i=0;i<3;i++)s+=ch[randInt(0,ch.length-1)];s+=dg[randInt(0,9)];return s;
+  }
+
+  function renderTicket(grid,idx,code){
+    const rows=grid.map(row=>'<tr>'+row.map(v=>v===null?'<td class="empty"></td>':`<td>${v}</td>`).join('')+'</tr>').join('');
+    return `<div class="ticket">
+      <div class="ticket-header"><span>Astra Tambola</span><span class="brand">astraglobal.com</span></div>
+      <table class="ticket-grid">${rows}</table>
+      <div class="ticket-footer"><span>#${idx}</span><span>code: ${code}</span></div>
+    </div>`;
+  }
+
+  function regenerate(){
+    const container=document.getElementById('tickets');container.innerHTML='';
+    const seen=new Set();let html='',count=0,attempts=0;
+    const target=parseInt(document.getElementById('ticketCount').value,10)||50;
+    while(count<target&&attempts<5000){
+      attempts++;const grid=generateTicket();const key=ticketKey(grid);
+      if(seen.has(key))continue;seen.add(key);count++;
+      html+=renderTicket(grid,count,randomCode());
+    }
+    container.innerHTML=html;
+  }
+
+/* =================== TABS =================== */
+  function switchTab(name){
+    document.getElementById('tab-caller').classList.toggle('active',name==='caller');
+    document.getElementById('tab-tickets').classList.toggle('active',name==='tickets');
+    document.getElementById('view-caller').classList.toggle('active',name==='caller');
+    document.getElementById('view-tickets').classList.toggle('active',name==='tickets');
+    if(name==='caller')stopAuto();
+  }
+
+  resetGame();
+  regenerate();
 </script>
 </body>
 </html>
